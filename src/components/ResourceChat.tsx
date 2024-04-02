@@ -83,15 +83,14 @@ const ResourceChat = ({ content }: Props) => {
     };
 
     try {
+      const queryString = `apiRequestBody=${encodeURIComponent(
+        JSON.stringify(apiRequestBody)
+      )}`;
+
       const response = await fetch(
-        "https://api.openai.com/v1/chat/completions",
+        "https://xprepper.com/api/training-hub/getOpenAI.php?" + queryString,
         {
-          method: "POST",
-          headers: {
-            Authorization: "Bearer " + APIKey_openai,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(apiRequestBody),
+          method: "GET",
         }
       );
 
