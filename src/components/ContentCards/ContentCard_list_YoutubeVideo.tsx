@@ -33,7 +33,7 @@ const ContentCard_list_YoutubeVideo = ({ content, youtubeInfo }: Props) => {
     >
       <Box
         maxH="320px"
-        maxW={{ base: "100%", sm: 300 }}
+        maxW={{ base: "100%", sm: 200 }}
         display="flex"
         justifyContent="center"
         backgroundColor="black"
