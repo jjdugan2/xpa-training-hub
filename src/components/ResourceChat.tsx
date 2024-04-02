@@ -12,6 +12,7 @@ import {
   InputLeftElement,
   Spacer,
   Spinner,
+  Stack,
   VStack,
 } from "@chakra-ui/react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
@@ -120,87 +121,82 @@ const ResourceChat = ({ content }: Props) => {
   };
 
   return (
-    <>
-      <Box borderWidth="1px" borderRadius="lg" p={5}>
-        <VStack align={"left"} spacing={7}>
-          {messages.map((message, i) => {
-            const isFinalMessage = i === messages.length - 1;
-            return (
-              <ResourceChatThread
-                key={i}
-                index={i}
-                thread={message}
-                isFinalMessage={isFinalMessage}
+    <Box borderWidth="1px" borderRadius="lg" p={5}>
+      <VStack align={"left"} spacing={7}>
+        {messages.map((message, i) => {
+          const isFinalMessage = i === messages.length - 1;
+          return (
+            <ResourceChatThread
+              key={i}
+              index={i}
+              thread={message}
+              isFinalMessage={isFinalMessage}
+            />
+          );
+        })}
+        {messages.length > 0 &&
+          messages[messages.length - 1].sender === "user" && (
+            <Flex minWidth="max-content" alignItems="center" gap="2">
+              <Box p="2">
+                <Heading size="md">XPrepper is responding...</Heading>
+              </Box>
+              <Spacer />
+              <Spinner size="lg" opacity={0.8} />
+            </Flex>
+          )}
+        <Stack direction={{ base: "column", md: "row" }} spacing="25px">
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleSend(chatInput);
+              setChatInput("");
+            }}
+          >
+            <InputGroup>
+              <InputLeftElement children={<ChatIcon opacity={0.7} />} />
+              <Input
+                ref={chatInputRef}
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                borderRadius={20}
+                placeholder="Ask a question..."
+                variant={"filled"}
               />
-            );
-          })}
-          {messages.length > 0 &&
-            messages[messages.length - 1].sender === "user" && (
-              <>
-                <Flex minWidth="max-content" alignItems="center" gap="2">
-                  <Box p="2">
-                    <Heading size="md">XPrepper is responding...</Heading>
-                  </Box>
-                  <Spacer />
-                  <ButtonGroup gap="2">
-                    <Spinner size="lg" opacity={0.8} />
-                  </ButtonGroup>
-                </Flex>
-              </>
-            )}
-          <HStack spacing="25px">
-            <form
-              onSubmit={(event) => {
-                event.preventDefault();
-                handleSend(chatInput); // Pass the current input value to handleSend
-                setChatInput(""); // Reset the input field after sending
-              }}
-            >
-              <InputGroup>
-                <InputLeftElement children={<ChatIcon opacity={0.7} />} />
-                <Input
-                  ref={chatInputRef}
-                  value={chatInput}
-                  onChange={(e) => setChatInput(e.target.value)}
-                  borderRadius={20}
-                  placeholder="Ask a question..."
-                  variant={"filled"}
-                />
-              </InputGroup>
-            </form>
-            {messages[messages.length - 1].sender === "ChatGPT" && (
-              <>
-                {chatInput.length >= 1 ? (
-                  <Button
-                    leftIcon={<ArrowRightIcon boxSize={3} />}
-                    colorScheme="orange"
-                    size={"md"}
-                    onClick={() => handleTellMeMore(chatInput)}
-                    px={10}
-                  >
-                    Send
-                  </Button>
-                ) : null}{" "}
-                {chatInput.length === 0 ? (
-                  <Button
-                    colorScheme="orange"
-                    size={"md"}
-                    onClick={() => handleTellMeMore("Tell me more")}
-                    px={10}
-                  >
-                    {messages.length === 3
-                      ? "Try 'Tell me more'"
-                      : messages.length >= 4
-                      ? "Tell me more"
-                      : ""}
-                  </Button>
-                ) : null}{" "}
-              </>
-            )}
-          </HStack>
-        </VStack>
-      </Box>
-    </>
+            </InputGroup>
+          </form>
+          {messages[messages.length - 1].sender === "ChatGPT" && (
+            <>
+              {chatInput.length >= 1 ? (
+                <Button
+                  leftIcon={<ArrowRightIcon boxSize={3} opacity={0.9} />}
+                  colorScheme="orange"
+                  size={"md"}
+                  onClick={() => handleTellMeMore(chatInput)}
+                  px={10}
+                >
+                  Send
+                </Button>
+              ) : null}{" "}
+              {chatInput.length === 0 ? (
+                <Button
+                  leftIcon={<ArrowRightIcon boxSize={3} opacity={0.9} />}
+                  colorScheme="orange"
+                  size={"md"}
+                  onClick={() => handleTellMeMore("Tell me more")}
+                  px={10}
+                >
+                  {messages.length === 3
+                    ? "Try 'Tell me more'"
+                    : messages.length >= 4
+                    ? "Tell me more"
+                    : ""}
+                </Button>
+              ) : null}{" "}
+            </>
+          )}
+        </Stack>
+      </VStack>
+    </Box>
   );
 };
 
