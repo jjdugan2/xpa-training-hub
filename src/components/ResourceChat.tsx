@@ -118,7 +118,6 @@ const ResourceChat = ({ content }: Props) => {
       <Box borderWidth="1px" borderRadius="lg" p={5}>
         <VStack align={"left"} spacing={7}>
           {messages.map((message, i) => {
-            console.log(message);
             const isFinalMessage = i === messages.length - 1;
             return (
               <ResourceChatThread
