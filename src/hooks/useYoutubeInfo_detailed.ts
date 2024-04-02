@@ -30,7 +30,7 @@ const useYoutubeInfo_detailed = (video_id: string) => {
         queryFn: () =>
             apiClient.getAll({
               params: {
-                detail_type: 'minimal',
+                detail_type: 'detailed',
                 video_id: video_id
               },
             }),
