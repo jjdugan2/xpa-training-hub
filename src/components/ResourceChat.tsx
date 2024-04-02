@@ -19,7 +19,6 @@ import { useEffect, useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { ContentKeys } from "../entities/ContentKeys";
 import ResourceChatThread from "./ResourceChatThread";
-require("dotenv").config();
 
 interface Props {
   content: ContentKeys;

@@ -1,9 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import APIClient, { endpoint_youtube } from "../services/api-client";
-require("dotenv").config();
 
 const apiClient = new APIClient<YoutubeInfo>(endpoint_youtube);
 const APIKey_youtube = process.env.VITE_REACT_APP_YOUTUBE_API_KEY;
+
+if (typeof process.env !== "undefined") {
+  if (!APIKey_youtube) {
+    console.error("YouTube API key not found in environment variables.");
+  } else {
+    console.log("YouTube API key found:", APIKey_youtube);
+  }
+} else {
+  console.error("process.env is not available. This environment does not support environment variables.");
+}
 
 export interface YoutubeInfo {
   snippet: {
