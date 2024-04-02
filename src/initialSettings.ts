@@ -2,7 +2,7 @@
 
 // Homepage settings...
 
-export const defaultWelcomeTitle = "Ready To Survive Disaster?"; //Leave empty to utilize heading from topic autoselect
+export const defaultWelcomeTitle = "Ready To Survive?"; //Leave empty to utilize heading from topic autoselect
 export const defaultTopicId = 1;
 export const defaultModalityId = 1;
 export const defaultSearchText = "";
