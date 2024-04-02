@@ -19,6 +19,12 @@ import { useEffect, useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { ContentKeys } from "../entities/ContentKeys";
 import ResourceChatThread from "./ResourceChatThread";
+import {
+  ArrowForwardIcon,
+  ArrowRightIcon,
+  ChatIcon,
+  EmailIcon,
+} from "@chakra-ui/icons";
 
 interface Props {
   content: ContentKeys;
@@ -108,8 +114,8 @@ const ResourceChat = ({ content }: Props) => {
     }
   }
 
-  const handleTellMeMore = () => {
-    handleSend("Tell me more");
+  const handleTellMeMore = (message: string) => {
+    handleSend(message);
     setChatInput("");
   };
 
@@ -151,24 +157,36 @@ const ResourceChat = ({ content }: Props) => {
               }}
             >
               <InputGroup>
-                <InputLeftElement children={<BsSearch />} />
+                <InputLeftElement children={<ChatIcon opacity={0.7} />} />
                 <Input
                   ref={chatInputRef}
                   value={chatInput}
-                  onChange={(e) => setChatInput(e.target.value)} // Update local state with the input value
+                  onChange={(e) => setChatInput(e.target.value)}
                   borderRadius={20}
                   placeholder="Ask a question..."
                   variant={"filled"}
                 />
               </InputGroup>
             </form>
-            {messages.length > 0 &&
-              messages[messages.length - 1].sender === "ChatGPT" && (
-                <>
+            {messages[messages.length - 1].sender === "ChatGPT" && (
+              <>
+                {chatInput.length >= 1 ? (
                   <Button
+                    leftIcon={<ArrowRightIcon boxSize={3} />}
                     colorScheme="orange"
                     size={"md"}
-                    onClick={handleTellMeMore}
+                    onClick={() => handleTellMeMore(chatInput)}
+                    px={10}
+                  >
+                    Send
+                  </Button>
+                ) : null}{" "}
+                {chatInput.length === 0 ? (
+                  <Button
+                    leftIcon={<ArrowRightIcon boxSize={3} />}
+                    colorScheme="orange"
+                    size={"md"}
+                    onClick={() => handleTellMeMore("Tell me more")}
                     px={10}
                   >
                     {messages.length === 3
@@ -177,8 +195,9 @@ const ResourceChat = ({ content }: Props) => {
                       ? "Tell me more"
                       : ""}
                   </Button>
-                </>
-              )}
+                ) : null}{" "}
+              </>
+            )}
           </HStack>
         </VStack>
       </Box>
