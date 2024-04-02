@@ -25,7 +25,7 @@ interface Props {
 }
 
 const ResourceChat = ({ content }: Props) => {
-  const APIKey_openai = process.env.VITE_REACT_APP_OPENAI_API_KEY;
+  const APIKey_openai = process.env.OPENAI_API_KEY;
   const chatInputRef = useRef<HTMLInputElement>(null);
   const [chatInput, setChatInput] = useState("");
   const [typing, setTyping] = useState(false);
