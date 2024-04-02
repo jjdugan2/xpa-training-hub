@@ -4,7 +4,7 @@ const ContentCardEmpty = () => {
   return (
     <Alert status="info">
       <AlertIcon />
-      Nothing to show.
+      Nothing more to show.
     </Alert>
   );
 };

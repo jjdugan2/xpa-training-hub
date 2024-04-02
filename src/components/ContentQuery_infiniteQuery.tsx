@@ -1,5 +1,5 @@
 import { Box, Button, SimpleGrid, Text } from "@chakra-ui/react";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import useContent_infiniteQuery from "../hooks/useContent_infiniteQuery";
 import useContentDisplayModeStore from "../storeContentDisplayMode";
 import useContentQueryStore from "../storeContentQuery";
@@ -14,9 +14,7 @@ const ContentQuery_infiniteQuery = () => {
   const selectedContentDisplayMode = useContentDisplayModeStore(
     (s) => s.contentDisplayMode
   );
-  const selectedQueryFetchCount = useContentQueryStore(
-    (s) => s.contentQuery.queryFetchCount
-  );
+  const contentQuery = useContentQueryStore((s) => s.contentQuery);
 
   const {
     data,
@@ -57,9 +55,11 @@ const ContentQuery_infiniteQuery = () => {
     if (!data?.pages[0].results || data.pages[0].results.length === 0) {
       return (
         //CURRENT: Create a container for the empty card, just like <ContentDataContainer_skeleton> above
-        <Box maxW={400}>
-          <ContentCardEmpty />
-        </Box>
+        <>
+          <Box maxW={400}>
+            <ContentCardEmpty />
+          </Box>
+        </>
       );
     }
 
@@ -68,7 +68,7 @@ const ContentQuery_infiniteQuery = () => {
         ? ContentDataContainer_list
         : ContentDataContainer_grid;
 
-    return data?.pages.map((page, index) => (
+    const contentDataElements = data?.pages.map((page, index) => (
       <React.Fragment key={index}>
         {page.results?.map((content) => (
           <ContentDataContainer key={content.id}>
@@ -77,6 +77,8 @@ const ContentQuery_infiniteQuery = () => {
         ))}
       </React.Fragment>
     ));
+
+    return contentDataElements;
   };
 
   return (
@@ -103,7 +105,7 @@ const ContentQuery_infiniteQuery = () => {
         </Box>
       )}
       <Box padding="0 20px">
-        {totalCount >= selectedQueryFetchCount && hasNextPage && (
+        {totalCount >= contentQuery.queryFetchCount && hasNextPage && (
           <Button onClick={() => fetchNextPage()} marginY={5}>
             {isFetchingNextPage ? "Loading..." : "Load More"}
           </Button>

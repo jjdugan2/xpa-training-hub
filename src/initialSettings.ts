@@ -23,7 +23,7 @@ export const defaultContentDisplayMode = "list";
 export const defaultContentQueryType = "useInfiniteQuery";
 export const defaultContentQueryFetchCount = 10; //Only applicable if defaultContentQueryType is "useInfiniteQuery" or "useInfiniteScroll"
 
-export const defaultContentQueryType_modality1 = "useInfiniteQuery";
+export const defaultContentQueryType_modality1 = "useQuery";
 export const defaultContentQueryFetchCount_modality1 = 4; //Only applicable if defaultContentQueryType_modality1 is "useInfiniteQuery" or "useInfiniteScroll"
 
 export const defaultContentQueryType_modality2 = "useQuery";

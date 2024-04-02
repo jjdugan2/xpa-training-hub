@@ -1,11 +1,8 @@
+import { ArrowRightIcon, ChatIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
-  ButtonGroup,
   Flex,
-  Grid,
-  GridItem,
-  HStack,
   Heading,
   Input,
   InputGroup,
@@ -17,21 +14,16 @@ import {
 } from "@chakra-ui/react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import { useEffect, useRef, useState } from "react";
-import { BsSearch } from "react-icons/bs";
 import { ContentKeys } from "../entities/ContentKeys";
 import ResourceChatThread from "./ResourceChatThread";
-import {
-  ArrowForwardIcon,
-  ArrowRightIcon,
-  ChatIcon,
-  EmailIcon,
-} from "@chakra-ui/icons";
+import useContentQueryStore from "../storeContentQuery";
 
 interface Props {
   content: ContentKeys;
 }
 
 const ResourceChat = ({ content }: Props) => {
+  const contentQuery = useContentQueryStore((s) => s.contentQuery);
   const chatInputRef = useRef<HTMLInputElement>(null);
   const [chatInput, setChatInput] = useState("");
   const [typing, setTyping] = useState(false);
@@ -46,7 +38,22 @@ const ResourceChat = ({ content }: Props) => {
   const [initialMessageSent, setInitialMessageSent] = useState(false);
 
   useEffect(() => {
-    const initialMessage = `Tell me more about ${content.title} with at least 3 actionable steps.`;
+    let initialMessage = "";
+
+    if (content && content.id !== 0) {
+      initialMessage = `I'm an avid prepper interested in ${content.topics_main_name}. Tell me more about ${content.title} with at least 3 actionable steps.`;
+    } else {
+      if (contentQuery) {
+        if (contentQuery.searchText) {
+          initialMessage = `I'm an avid prepper. Tell me more about ${contentQuery.searchText} with at least 3 actionable steps.`;
+        }
+      }
+    }
+
+    if (!initialMessage) {
+      initialMessage = `I'm an avid prepper. Give me an interesting 'heres how' hack with 3 actionable steps.`;
+    }
+
     if (!initialMessageSent) {
       handleSend(initialMessage);
       setInitialMessageSent(true);
@@ -80,7 +87,7 @@ const ResourceChat = ({ content }: Props) => {
     const systemMessage = {
       role: "system",
       content:
-        "No more than 300 characters. Add two linebreaks between sentences. Never start with a conversational acknowledgment.",
+        "No more than 300 characters. Add two linebreaks between sentences. Never start with an acknowledgment.",
     };
 
     const apiRequestBody = {
