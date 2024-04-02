@@ -183,7 +183,6 @@ const ResourceChat = ({ content }: Props) => {
                 ) : null}{" "}
                 {chatInput.length === 0 ? (
                   <Button
-                    leftIcon={<ArrowRightIcon boxSize={3} />}
                     colorScheme="orange"
                     size={"md"}
                     onClick={() => handleTellMeMore("Tell me more")}
