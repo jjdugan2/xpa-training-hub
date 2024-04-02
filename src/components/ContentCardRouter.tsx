@@ -36,8 +36,6 @@ const ContentCardRouter = ({
             youtubeInfo={youtubeInfo}
           />
         );
-      } else {
-        return <ContentCard_grid_YoutubeNotExists content={content} />;
       }
     } else if (selectedContentDisplayMode.name === "list") {
       if (youtubeInfo?.exists) {
@@ -47,8 +45,6 @@ const ContentCardRouter = ({
             youtubeInfo={youtubeInfo}
           />
         );
-      } else {
-        return <ContentCard_list_YoutubeNotExists content={content} />;
       }
     }
   }
@@ -62,8 +58,6 @@ const ContentCardRouter = ({
             youtubeInfo={youtubeInfo}
           />
         );
-      } else {
-        return <ContentCard_grid_YoutubeNotExists content={content} />;
       }
     } else if (selectedContentDisplayMode.name === "list") {
       if (youtubeInfo?.exists) {
@@ -73,8 +67,6 @@ const ContentCardRouter = ({
             youtubeInfo={youtubeInfo}
           />
         );
-      } else {
-        return <ContentCard_list_YoutubeNotExists content={content} />;
       }
     }
   }
