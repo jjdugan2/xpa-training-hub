@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 export const endpoint_siteContent = "https://xprepper.com/api/training-hub/request.php";
-export const endpoint_youtube = "https://www.googleapis.com/youtube/v3/videos";
+export const endpoint_youtube = "https://xprepper.com/api/training-hub/getYoutube.php";
 
 export interface FetchResponse<T> {
     count: number;
