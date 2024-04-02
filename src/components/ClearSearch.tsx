@@ -23,7 +23,7 @@ const ClearSearch = () => {
   if (selectedSearchText && selectedSearchText !== "") {
     return (
       <>
-        <Stack spacing={10} paddingBottom={5}>
+        <Stack spacing={5} paddingBottom={3}>
           <Box>
             <Button
               key="1"
