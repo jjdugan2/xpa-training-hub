@@ -12,7 +12,7 @@ const ThumbnailChatThread = ({ index, thread }: Props) => {
     index >= 2 && thread.message && thread.message.length > 0;
 
   if (isValidThread) {
-    return thread.message;
+    return <>thread.message</>;
   }
   return null;
 };
